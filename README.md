@@ -1,16 +1,26 @@
-# HydroChain
+# HydroChain: Blockchain-Based Hydrogen Credit Management System
 
 **Empowering a Sustainable Future with Blockchain-Powered Green Hydrogen Credits**
 
----
+A comprehensive platform for managing green hydrogen credits using Ethereum smart contracts, IoT data verification, and decentralized identity (DID).
 
 ## Overview
 
-HydroChain is a comprehensive blockchain platform designed to be **Transparent · Verifiable · Decentralized**. Our system enables the seamless issuance, verification, and tracking of green hydrogen credits across their entire lifecycle, ensuring trust and accountability in the green hydrogen ecosystem.
+HydroChain is a comprehensive blockchain platform designed to be **Transparent · Verifiable · Decentralized**. Our system enables:
 
-## Use Case
+- **Issuing** of hydrogen credits by renewable energy plants
+- **Trading** of credits between plants and industries
+- **Retirement** of credits by industries after consumption
+- **Auditing** of transactions by authorized regulators/auditors
+- **IoT integration** for data-driven verification
+- **Decentralized Identity (DID)** for secure authentication
+
+The system combines blockchain's immutability with IoT data verification to create a trusted, transparent hydrogen credit ecosystem.
+
+## Use Case & Market Challenges
 
 HydroChain addresses critical market challenges in green hydrogen credit trading by:
+
 - **Enabling secure buying and selling** of green hydrogen credits
 - **Preventing greenwashing** through transparent verification
 - **Eliminating duplicate selling** with blockchain-based immutability
@@ -18,65 +28,109 @@ HydroChain addresses critical market challenges in green hydrogen credit trading
 
 Blockchain technology serves as the foundation for trust, ensuring every transaction is transparent, verifiable, and tamper-proof.
 
-## Features Implemented
+## User Roles & Workflow
 
-### Backend Infrastructure
+The platform serves three primary user types:
+
+1. **Plants (Producers)** – Generate green hydrogen and issue credits
+2. **Industries (Consumers)** – Purchase, use, and retire hydrogen credits
+3. **Auditors/Regulators** – Validate and approve all credit-related requests
+
+### Core Workflow
+
+```
+┌──────────────┐        ┌──────────────────┐        ┌───────────────┐
+│              │        │                  │        │               │
+│   IoT Data   │───────►│  Auto-Verification│───────►│   Auditor     │
+│  Collection  │        │  & VC Issuance    │        │   Review      │
+│              │        │                  │        │               │
+└──────────────┘        └──────────────────┘        └───────┬───────┘
+                                                           │
+                                                           ▼
+┌───────────────┐        ┌──────────────────┐        ┌───────────────┐
+│               │        │                  │        │               │
+│  Blockchain   │◄───────│   Transaction    │◄───────│   Approval    │
+│  Recording    │        │   Processing     │        │   Decision    │
+│               │        │                  │        │               │
+└───────────────┘        └──────────────────┘        └───────────────┘
+```
+
+## Technical Architecture
+
+### System Components
+
+1. **REST API Layer** - Built with Elysia.js, providing endpoints for user and credit operations
+2. **Database Layer** - PostgreSQL with Prisma ORM for data persistence
+3. **Blockchain Layer** - Ethereum smart contract for immutable record-keeping
+4. **Authentication System** - Session-based authentication with DID integration
+5. **IoT Integration Layer** - For collecting and validating operational data
+6. **Verifiable Credentials System** - For automated verification of requests
+7. **Role-Based Access Control** - Different permissions for Plant, Industry, and Auditor users
+
+### Features Implemented
+
+#### Backend Infrastructure
+
 - **Issue Request Management**: Streamlined credit issuance workflow
-- **Buy Request Processing**: Secure purchase transaction handling  
+- **Buy Request Processing**: Secure purchase transaction handling
 - **Authentication System**: Role-based access control for all user types
 - **Request Tracking**: PostgreSQL database for comprehensive audit trails
 
-### Smart Contracts
+#### Smart Contracts
+
 - **Solidity-based Smart Contracts**: Automated credit lifecycle management
 - **Non-Duplicatable Credits**: Unique token generation preventing fraud
 - **Buying & Selling Logic**: Secure transfer mechanisms
 - **Governing Authority Integration**: Automated approval/rejection workflows
 
-### Governance
+#### Governance
+
 - **Authority Verification**: Governing bodies can accept or reject permissions
 - **Compliance Monitoring**: Real-time oversight of all transactions
 - **Regulatory Integration**: Support for external auditors and verifiers
 
-## Frontend Experience
+### Frontend Experience
 
 Built with modern web technologies for optimal user experience:
+
 - **Landing Page**: Professional introduction to the platform
 - **Plant Dashboard**: Specialized interface for hydrogen producers
 - **High-Performance Stack**: React.js with Vite, ShadCN UI components
 
-## Future Roadmap
+### Core Technologies
 
-### Phase 1 - Enhanced Security
-- **Credit Retirement System**: Complete lifecycle management
-- **DID Verification**: Decentralized Identity integration
-- **Verifiable Credentials (VCs)**: Cryptographic proof of authenticity
+- **Bun** - JavaScript runtime and package manager
+- **Elysia.js** - TypeScript web framework optimized for Bun
+- **Prisma** - ORM for database access and migrations
+- **Ethers.js** - Ethereum blockchain interaction library
+- **PostgreSQL** - Primary database for storing user data and transaction records
+- **React** - Frontend user interface with Vite
+- **DID Framework** - For decentralized identity management
+- **Verifiable Credentials** - For cryptographic proof of verification
+- **Tailwind CSS** - For responsive, modern styling
+- **ShadCN UI** - For consistent, accessible components
 
-### Phase 2 - IoT Integration
-- **Real-time IoT Monitoring**: Sensor data integration for verification
-- **Automated Validation**: IoT-triggered credit issuance
-- **Enhanced Compliance**: Real-world data validation for selling and retirement
+### System Architecture Diagram
 
-## Technology Stack
-
-### Frontend
-- **React.js** with **Vite** for fast development and builds
-- **React Router DOM** for seamless navigation
-- **Tailwind CSS** for responsive, modern styling
-- **ShadCN UI** for consistent, accessible components
-
-### Backend
-- **Elysia Framework** for robust server-side logic
-- **PostgreSQL** for reliable data persistence and request tracking
-- **RESTful APIs** for seamless frontend-backend communication
-
-### Blockchain
-- **Solidity Smart Contracts** for automated, trustless operations
-- **Ethereum-compatible networks** for broad ecosystem support
-- **Sepolia Testnet** for development and testing
+```
+┌─────────────┐      ┌──────────────┐      ┌───────────────┐
+│             │      │              │      │               │
+│   React     │──────►   REST API   │──────►   Database    │
+│  Frontend   │◄──────│  (Elysia.js) │◄──────│   (PostgreSQL) │
+│             │      │              │      │               │
+└─────────────┘      └──────┬───────┘      └───────────────┘
+                           │
+       ┌───────────────────┼───────────────────┐
+       │                   │                   │
+┌──────▼──────┐     ┌──────▼──────┐     ┌──────▼──────┐
+│              │     │              │     │              │
+│  Ethereum    │     │  IoT Data    │     │     DID      │
+│Smart Contract│     │  Integration │     │   System     │
+│              │     │              │     │              │
+└──────────────┘     └──────────────┘     └──────────────┘
+```
 
 ## Smart Contract Implementation
-
-### HydrogenCredit Contract
 
 Our core smart contract handles the complete lifecycle of green hydrogen credits:
 
@@ -161,156 +215,328 @@ contract HydrogenCredit {
 ```
 
 ### Contract Features
+
 - **Unique Credit IDs**: Prevents duplicate credit creation
 - **Full Lifecycle Management**: Issue, transfer, and retire credits
 - **Ownership Verification**: Only credit holders can transfer or retire
 - **Immutable Records**: All transactions permanently recorded on blockchain
 - **Event Logging**: Complete audit trail through blockchain events
 
-## Implementation Guide
+## Core System Flows
 
-### Blockchain Setup
+### 1. Digital Identity (DID) for Secure Access
 
-1. **Install MetaMask**
-   ```bash
-   # Download MetaMask browser extension from metamask.io
-   # Create a new wallet and securely store your seed phrase
-   ```
+- Plants and Industries must have IoT-based data verification systems installed
+- Auditors physically verify the IoT system and plant/industry location
+- Upon verification, a Decentralized Identity (DID) is issued
+- DID serves as the secure login credential for platform access
 
-2. **Create Local Ethereum Account**
-   ```bash
-   # In MetaMask:
-   # 1. Click on account avatar
-   # 2. Select "Create Account" 
-   # 3. Name your account (e.g., "HydroChain Dev")
-   ```
+### 2. IoT Data Integration
 
-3. **Configure Sepolia Testnet**
-   ```bash
-   # Add Sepolia network to MetaMask:
-   # Network Name: Sepolia
-   # RPC URL: https://sepolia.infura.io/v3/YOUR-PROJECT-ID
-   # Chain ID: 11155111
-   # Currency Symbol: ETH
-   # Block Explorer: https://sepolia.etherscan.io
-   ```
+Real-time IoT data is displayed on user dashboards, including:
 
-4. **Get Test ETH**
-   ```bash
-   # Visit Sepolia faucet: https://sepoliafaucet.com/
-   # Enter your wallet address
-   # Receive free Sepolia ETH for testing
-   ```
+- Hydrogen **production** metrics for Plants
+- Hydrogen **transfer** records between Plants and Industries
+- Hydrogen **consumption** metrics for Industries
 
-5. **Deploy Smart Contract**
-   ```bash
-   # Using Hardhat or Remix IDE:
-   # 1. Compile the HydrogenCredit.sol contract
-   # 2. Connect MetaMask to deployment environment
-   # 3. Deploy to Sepolia testnet using test ETH
-   # 4. Copy contract address for frontend integration
-   ```
+This IoT data provides the foundational evidence for all credit-related activities.
 
-6. **Smart Contract Integration**
-   ```javascript
-   // Frontend integration with Web3
-   import Web3 from 'web3';
-   
-   // Connect to deployed contract
-   const web3 = new Web3(window.ethereum);
-   const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
-   
-   // Issue new credit
-   await contract.methods.issueCredit(creditId, recipientAddress, amount)
-     .send({ from: userAddress });
-   
-   // Transfer credit
-   await contract.methods.transferCredit(creditId, recipientAddress)
-     .send({ from: userAddress });
-   
-   // Retire credit
-   await contract.methods.retireCredit(creditId)
-     .send({ from: userAddress });
-   ```
+### 3. Credit Issuance Flow
 
-## Getting Started
+1. Plant initiates credit issuance request with amount and production data
+2. System auto-verifies request against IoT data
+3. If valid, a Verifiable Credential (VC) is attached to the request
+4. Request is forwarded to assigned Auditor with VC status
+5. Auditor reviews and approves/rejects
+6. If approved:
+   - Smart contract issues credit tokens
+   - Transaction hash is recorded
+   - Request status changes to ISSUED
+   - Plant's lifetime generated credits are updated
 
-### Prerequisites
-- Node.js (v16 or higher)
-- PostgreSQL database
+### 4. Credit Transfer Flow
+
+1. Industry submits buy request for specific credit ID
+2. System verifies transfer data against IoT records
+3. If valid, a VC is attached to the request
+4. Request is forwarded to assigned Auditor with VC status
+5. Auditor reviews and approves/rejects
+6. If approved:
+   - Smart contract transfers credit ownership
+   - Transaction hash is recorded
+   - Request status changes to TRANSFERRED
+   - Plant and industry lifetime statistics are updated
+
+### 5. Credit Retirement Flow
+
+1. Industry submits retirement request for specific credit ID
+2. System verifies consumption data against IoT records
+3. If valid, a VC is attached to the request
+4. Request is forwarded to assigned Auditor with VC status
+5. Auditor reviews and approves/rejects
+6. If approved:
+   - Smart contract marks credit as retired
+   - Transaction hash is recorded
+   - Request status changes to RETIRED
+   - Industry's lifetime retired credits are updated
+
+## Database Schema Details
+
+The application uses Prisma with PostgreSQL and includes the following core models:
+
+### User Model
+
+```prisma
+model User {
+  id String @id @default(uuid())
+  role UserRole
+  username String @unique
+  password String
+  companyName String?
+  governmentLicenseId String?
+  did String?
+  walletAddress String? @unique
+  walletPrivateKey String?
+  assignedAuditor User? @relation("AuditorAssignment", fields: [assignedAuditorId], references: [id])
+  assignedAuditorId String?
+  assignedUsers User[] @relation("AuditorAssignment")
+  lifeTimeGeneratedCredits Float @default(0)
+  lifeTimeTransferredCredits Float @default(0)
+  lifeTimeRetiredCredits Float @default(0)
+  lifeTimeBoughtCredits Float @default(0)
+  // Relations
+  sessions Session[]
+  creditIssueRequests CreditIssueRequest[] @relation(name: "issuedPlant")
+  creditIssueRequestsActions CreditIssueRequest[] @relation(name: "issueRequestAuditor")
+  creditBuyRequests CreditBuyRequest[] @relation(name: "creditBuyerPlant")
+  CreditBuyRequest CreditBuyRequest[] @relation(name: "creditSellingPlant")
+  creditRetireRequests CreditRetireRequest[] @relation(name: "retiringIndustry")
+  creditRetireRequestsActions CreditRetireRequest[] @relation(name: "retireRequestAuditor")
+}
+```
+
+### Credit Request Models
+
+The system uses three types of request models:
+
+1. **CreditIssueRequest** - For plants to request new credit issuance
+2. **CreditBuyRequest** - For industries to purchase credits from plants
+3. **CreditRetireRequest** - For industries to retire credits after use
+
+## Prerequisites
+
+- [Bun](https://bun.sh/) >= 1.0.0
+- [PostgreSQL](https://www.postgresql.org/) >= 15.0
+- [Solc](https://docs.soliditylang.org/en/v0.8.0/installing-solidity.html) (Solidity Compiler)
+- [Node.js](https://nodejs.org/) >= 16.0.0 (for frontend)
+- Ethereum provider (like [Infura](https://www.infura.io/), [Alchemy](https://www.alchemy.com/), or a local node)
 - MetaMask browser extension
-- Sepolia testnet ETH
 
-### Installation
+## Environment Setup
 
-1. **Clone the repository**
+### Backend Environment
+
+Create a `.env` file in the `backend` directory with the following variables:
+
+```env
+# Server Configuration
+PORT=3000
+TRAFFIC_LOG=true
+LOG_LEVEL=1
+ORIGIN=http://localhost:3000
+FRONTEND_ORIGINS=http://localhost:3000,http://localhost:5173
+
+# Database
+DATABASE_URL=postgresql://username:password@localhost:5432/hydrochain
+
+# Authentication
+SESSION_COOKIE_NAME=sid
+
+# Blockchain
+PRIMARY_ETH_ACCOUNT_PRIVATE_KEY=your_ethereum_private_key
+ETHER_PROVIDER_URL=https://eth-sepolia.g.alchemy.com/v2/your_api_key
+CONTRACT_ADDRESS=0x0000000000000000000000000000000000000000  # Will be updated after deployment
+```
+
+### Frontend Environment
+
+Create a `.env` file in the `frontend` directory:
+
+```env
+VITE_API_URL=http://localhost:3000
+VITE_WS_URL=ws://localhost:3000
+```
+
+## Installation
+
+### Backend Installation
+
+1. Clone the repository:
+
    ```bash
-   git clone https://github.com/your-org/hydrochain.git
-   cd hydrochain
+   git clone https://github.com/henilmalaviya/hydrochain.git
+   cd hydrochain/backend
    ```
 
-2. **Install frontend dependencies**
+2. Install dependencies:
+
    ```bash
-   cd frontend
-   npm install
+   bun install
    ```
 
-3. **Install backend dependencies**
+3. Setup the database:
+
    ```bash
-   cd backend
-   npm install
+   bunx prisma migrate deploy
    ```
 
-4. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   # Configure your database and blockchain settings
-   SEPOLIA_RPC_URL=your-sepolia-rpc-url
-   CONTRACT_ADDRESS=your-deployed-contract-address
-   ```
+4. Compile and deploy the smart contract:
 
-5. **Deploy smart contracts**
    ```bash
    cd contracts
-   npx hardhat compile
-   npx hardhat deploy --network sepolia
+   bunx solc --bin --abi HydrogenCredit.sol
+   cd ..
+   bun run scripts/deployContracts.ts
    ```
 
-6. **Run the application**
+5. Update the `CONTRACT_ADDRESS` in your `.env` file with the deployed contract address.
+
+### Frontend Installation
+
+1. Navigate to the frontend directory:
+
    ```bash
-   # Start backend
-   cd backend && npm start
-   
-   # Start frontend (new terminal)
-   cd frontend && npm run dev
+   cd ../frontend
    ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+## Running the Application
+
+### Backend
+
+```bash
+# Development mode
+bun run dev
+
+# Production mode
+bun run start
+```
+
+### Frontend
+
+```bash
+# Development mode
+npm run dev
+
+# Production build
+npm run build
+```
+
+## API Routes Reference
+
+### Authentication & User Management
+
+- `POST /users` - Register a new user
+- `POST /users/:username/login` - User login
+- `GET /users/:username` - Get user transaction history
+- `GET /me` - Get current user info
+
+### Credit Issuance (Plant & Auditor)
+
+- `POST /request/issues` - Create credit issue request
+- `GET /request/issues` - Get issue requests (for auditor)
+- `POST /request/issues/:creditId/accept` - Approve issue request
+- `POST /request/issues/:creditId/reject` - Reject issue request
+
+### Credit Trading (Industry & Auditor)
+
+- `POST /request/buy` - Create credit buy request
+- `GET /request/buy` - Get buy requests (for auditor)
+- `POST /request/buy/:reqId/accept` - Approve buy request
+- `POST /request/buy/:reqId/reject` - Reject buy request
+
+### Credit Retirement (Industry & Auditor)
+
+- `POST /request/retire` - Create credit retirement request
+- `GET /request/retire` - Get retirement requests (for auditor)
+- `POST /request/retire/:reqId/accept` - Approve retirement request
+- `POST /request/retire/:reqId/reject` - Reject retirement request
 
 ## Usage
 
-### For Producers
+### For Producers (Plants)
+
 1. Connect MetaMask wallet
 2. Request credit issuance through plant dashboard
 3. Wait for governing authority approval
 4. Receive credits in blockchain wallet
 
-### For Buyers
+### For Consumers (Industries)
+
 1. Browse available credits in marketplace
 2. Initiate purchase through smart contract
-3. Complete transaction using Sepolia ETH
-4. Credits automatically transferred to wallet
+3. Complete transaction using Ethereum
+4. Track and retire credits after hydrogen consumption
 
-### For Authorities
+### For Authorities (Auditors)
+
 1. Review credit issuance requests
-2. Verify compliance documentation
+2. Verify compliance documentation and IoT data
 3. Approve/reject through governance interface
 4. Monitor all transactions on blockchain
 
+## Future Roadmap
+
+### Phase 1 - Enhanced Security
+
+- **Credit Retirement System**: Complete lifecycle management
+- **DID Verification**: Decentralized Identity integration
+- **Verifiable Credentials (VCs)**: Cryptographic proof of authenticity
+
+### Phase 2 - IoT Integration
+
+- **Real-time IoT Monitoring**: Sensor data integration for verification
+- **Automated Validation**: IoT-triggered credit issuance
+- **Enhanced Compliance**: Real-world data validation for selling and retirement
+
+## Security Features
+
+1. **Decentralized Identity (DID)** - Self-sovereign identity for secure authentication
+2. **Verifiable Credentials** - Cryptographic proof of verification
+3. **Session-based authentication** - Secure session management with cookies
+4. **Role-based access control** - Endpoints protected by user roles
+5. **Private key management** - Secure handling of Ethereum private keys
+6. **Request validation** - Comprehensive validation against IoT data
+7. **Anomaly detection** - Flagging of suspicious transactions
+
+## Key Benefits
+
+- **Verifiable Production**: All hydrogen production is verified via IoT data
+- **Double-Counting Prevention**: Blockchain ensures credits cannot be used twice
+- **Transparent Tracking**: Complete audit trail from issuance to retirement
+- **Automated Verification**: System pre-verifies requests before human review
+- **Regulatory Compliance**: Built-in oversight by authorized auditors
+- **Fraud Resistance**: Multiple verification layers (IoT, VC, Auditor, Blockchain)
+
 ## Contributing
 
-We welcome contributions to HydroChain! Please read our contributing guidelines and submit pull requests for any improvements.
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Open a pull request
+
+## License
+
+[MIT License](LICENSE)
 
 ---
 
 **Built for HackOut'25 at Dhirubhai Ambani University Gandhinagar**
 
-*Addressing the first problem statement: Blockchain-Based Green Hydrogen Credit System*
+_Addressing the first problem statement: Blockchain-Based Green Hydrogen Credit System_
